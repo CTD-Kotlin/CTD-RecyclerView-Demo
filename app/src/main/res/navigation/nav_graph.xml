@@ -14,9 +14,6 @@
         <action
             android:id="@+id/action_welcomeFragment_to_recyclerViewFragment"
             app:destination="@id/recyclerViewFragment" />
-        <action
-            android:id="@+id/action_welcomeFragment_to_detailViewFragment"
-            app:destination="@id/detailViewFragment" />
     </fragment>
     <fragment
         android:id="@+id/recyclerViewFragment"
