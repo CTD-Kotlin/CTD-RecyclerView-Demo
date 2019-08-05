@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 
 import com.example.ctdrecviewtutorial.R
 import com.example.ctdrecviewtutorial.database.MyViewModel
+import com.example.ctdrecviewtutorial.models.Note
 import kotlinx.android.synthetic.main.fragment_detail_view.*
 
 class DetailViewFragment : Fragment() {
@@ -26,14 +28,23 @@ class DetailViewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-
+        var note: Note? = null
         buttonDeleteNote.setOnClickListener {
-
+            note?.let {
+                viewModel.deleteNote(it)
+                findNavController().popBackStack()
+            }
         }
 
         viewModel.myNotes.observe(this, Observer {
             it?.let { noteList ->
-
+                val position = arguments?.get(getString(R.string.position_key)) as Int
+                note = noteList[position]
+                note?.let { nonNullNote ->
+                    textViewNoteTitle.text = nonNullNote.title
+                    textViewNoteContent.text = nonNullNote.content
+                    checkBoxPrivateNote.isChecked = nonNullNote.isPrivate
+                }
             }
         })
 
