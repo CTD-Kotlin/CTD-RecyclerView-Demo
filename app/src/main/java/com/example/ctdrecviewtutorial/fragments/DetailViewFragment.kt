@@ -11,7 +11,6 @@ import androidx.lifecycle.Observer
 
 import com.example.ctdrecviewtutorial.R
 import com.example.ctdrecviewtutorial.database.MyViewModel
-import com.example.ctdrecviewtutorial.models.Note
 import kotlinx.android.synthetic.main.fragment_detail_view.*
 
 class DetailViewFragment : Fragment() {
@@ -28,7 +27,7 @@ class DetailViewFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        buttonAddNoted.setOnClickListener {
+        buttonDeleteNote.setOnClickListener {
 
         }
 
