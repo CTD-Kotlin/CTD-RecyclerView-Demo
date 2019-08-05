@@ -28,5 +28,10 @@
         android:id="@+id/detailViewFragment"
         android:name="com.example.ctdrecviewtutorial.fragments.DetailViewFragment"
         android:label="Details"
-        tools:layout="@layout/fragment_detail_view" />
+        tools:layout="@layout/fragment_detail_view" >
+        <argument
+            android:name="POSITION"
+            app:argType="integer"
+            android:defaultValue="0" />
+    </fragment>
 </navigation>

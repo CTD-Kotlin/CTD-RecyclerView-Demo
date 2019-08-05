@@ -10,11 +10,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.ctdrecviewtutorial.R
 import com.example.ctdrecviewtutorial.models.Note
 
-class NoteRecylcerViewAdapter : ListAdapter<Note, NoteViewHolder>(NoteDiffCallback()) {
+class NoteRecylcerViewAdapter(private val onClick: (Int) -> Unit) :
+    ListAdapter<Note, NoteViewHolder>(NoteDiffCallback()) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_note, parent, false)
-        return NoteViewHolder(view)
+        return NoteViewHolder(view, onClick)
     }
 
     override fun onBindViewHolder(holder: NoteViewHolder, position: Int) {
@@ -23,20 +24,24 @@ class NoteRecylcerViewAdapter : ListAdapter<Note, NoteViewHolder>(NoteDiffCallba
 
 }
 
-class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class NoteViewHolder(itemView: View, private val onClick: (Int) -> Unit) : RecyclerView.ViewHolder(itemView) {
     var note: Note? = null
-    set(value) {
-        field = value
-        note?.let {
-            itemView.findViewById<TextView>(R.id.textViewVHTitle).text = it.title
-            val content = itemView.findViewById<TextView>(R.id.textViewVHPreview)
-            content.text = it.content
-            content.visibility = if (it.isPrivate) View.GONE else View.VISIBLE
-            itemView.findViewById<TextView>(R.id.textViewVHDate).text = it.timeStamp.toString()
+        set(value) {
+            field = value
+            note?.let {
+                itemView.findViewById<TextView>(R.id.textViewVHTitle).text = it.title
+                val content = itemView.findViewById<TextView>(R.id.textViewVHPreview)
+                content.text = it.content
+                content.visibility = if (it.isPrivate) View.GONE else View.VISIBLE
+                itemView.findViewById<TextView>(R.id.textViewVHDate).text = it.timeStamp.toString()
+            }
         }
 
+    init {
+        itemView.setOnClickListener { onClick(adapterPosition) }
     }
 }
+
 
 class NoteDiffCallback : DiffUtil.ItemCallback<Note>() {
 

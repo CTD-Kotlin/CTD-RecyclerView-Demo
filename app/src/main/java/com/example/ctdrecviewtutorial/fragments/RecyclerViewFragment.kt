@@ -7,10 +7,12 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.ctdrecviewtutorial.R
@@ -31,7 +33,11 @@ class RecyclerViewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val adapter = NoteRecylcerViewAdapter()
+        val adapter = NoteRecylcerViewAdapter { position ->
+            val bundle = bundleOf(getString(R.string.position_key) to position)
+            findNavController().navigate(R.id.action_recyclerViewFragment_to_detailViewFragment, bundle)
+        }
+
         val myLayoutManager = LinearLayoutManager(requireContext())
         recyclerView.apply {
             this.layoutManager = myLayoutManager
