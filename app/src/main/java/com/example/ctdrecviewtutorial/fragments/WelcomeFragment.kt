@@ -25,11 +25,6 @@ class WelcomeFragment : Fragment() {
             findNavController().navigate(R.id.action_welcomeFragment_to_recyclerViewFragment)
         }
 
-        // New Note Button
-        view.findViewById<Button>(R.id.buttonNewNote).setOnClickListener {
-            findNavController().navigate(R.id.action_welcomeFragment_to_detailViewFragment)
-        }
-
         return view
     }
 

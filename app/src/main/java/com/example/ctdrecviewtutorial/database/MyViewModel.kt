@@ -34,7 +34,7 @@ class MyViewModel : ViewModel() {
         "What did you just say, person within fireball distance"
     )
 
-    fun addNote(note: Note) {
+    fun addNote() {
         val list = _myNotes.value
         list?.add(Note(noteTitles.random(), noteContent.random(), arrayOf(true, false).random()))
         _myNotes.postValue(list)
