@@ -27,9 +27,14 @@ class NoteViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     var note: Note? = null
     set(value) {
         field = value
-        itemView.findViewById<TextView>(R.id.textViewVHTitle).text = note?.title
-        itemView.findViewById<TextView>(R.id.textViewVHPreview).text = note?.content
-        itemView.findViewById<TextView>(R.id.textViewVHDate).text = note?.timeStamp.toString()
+        note?.let {
+            itemView.findViewById<TextView>(R.id.textViewVHTitle).text = it.title
+            val content = itemView.findViewById<TextView>(R.id.textViewVHPreview)
+            content.text = it.content
+            content.visibility = if (it.isPrivate) View.GONE else View.VISIBLE
+            itemView.findViewById<TextView>(R.id.textViewVHDate).text = it.timeStamp.toString()
+        }
+
     }
 }
 
@@ -40,7 +45,7 @@ class NoteDiffCallback : DiffUtil.ItemCallback<Note>() {
     }
 
     override fun areContentsTheSame(oldItem: Note, newItem: Note): Boolean {
-        return oldItem.title == newItem.title && oldItem.content == newItem.content
+        return oldItem.title == newItem.title && oldItem.content == newItem.content && oldItem.timeStamp == newItem.timeStamp
     }
 
 }

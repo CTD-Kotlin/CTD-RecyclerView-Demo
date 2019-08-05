@@ -2,6 +2,7 @@ package com.example.ctdrecviewtutorial.fragments
 
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,8 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 
 import com.example.ctdrecviewtutorial.R
+import com.example.ctdrecviewtutorial.adapter.NoteRecylcerViewAdapter
 import com.example.ctdrecviewtutorial.database.MyViewModel
 import kotlinx.android.synthetic.main.fragment_recycler_view.*
 
@@ -28,12 +31,23 @@ class RecyclerViewFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val adapter = NoteRecylcerViewAdapter()
+        val myLayoutManager = LinearLayoutManager(requireContext())
+        recyclerView.apply {
+            this.layoutManager = myLayoutManager
+            this.adapter = adapter
+        }
+
         viewModel.myNotes.observe(this, Observer {
             it?.let { noteList ->
-
+                Log.d(javaClass.name, "number of notes = ${noteList.size}")
+                adapter.submitList(ArrayList(noteList))
             }
         })
 
+        floatingActionButton.setOnClickListener {
+            viewModel.addNote()
+        }
     }
 
 }
